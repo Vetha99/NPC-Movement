@@ -14,21 +14,21 @@ class Enemy{
         this.enemyImage = new Image()
         this.enemyImage.src = imageSrc
         this.speed = (Math.random()*4+1)
-        this.spriteWidth = 266
-        this.spriteHeight = 188
+        this.spriteWidth = 218
+        this.spriteHeight = 177
         this.flapSpeed = Math.floor(Math.random() * 4 + 2)
         this.width = this.spriteWidth*this.flapSpeed*0.1
         this.height = this.spriteHeight*this.flapSpeed*0.1
         this.x = Math.random() * (CANVAS_WIDTH - this.width)
         this.y = Math.random() * (CANVAS_HEIGHT- this.height)
-        this.Y = this.y
         this.frame = 0
         this.angle = Math.random()*Math.PI
-        this.angleSpeed = Math.random()*0.2-0.1
+        this.angleSpeed = (Math.random()*0.12-0.06)
+        this.curveAmp = Math.random() *100 +100
     }
     update(gameFrame){
-        this.x -= this.speed
-        this.y = Math.sin(this.angle)*100+this.Y
+        this.x = Math.cos(this.angle*(1/2))*(CANVAS_WIDTH-this.width)/2+(CANVAS_WIDTH-this.width)/2 
+        this.y = Math.sin(this.angle*(1/2.5))*(CANVAS_HEIGHT-this.height)/2+(CANVAS_HEIGHT-this.height)/2 
         this.angle+=this.angleSpeed
         if (this.x<-this.width) this.x = CANVAS_WIDTH
         if (gameFrame%this.flapSpeed===0){
@@ -42,7 +42,7 @@ class Enemy{
 }
 
 for (let i = 0; i < numberEnemies; ++i) {
-    enemies.push(new Enemy("enemy2.png"))
+    enemies.push(new Enemy("enemy3.png"))
 }
 
 function animate(){
