@@ -14,25 +14,29 @@ class Enemy{
         this.enemyImage = new Image()
         this.enemyImage.src = imageSrc
         this.speed = (Math.random()*4+1)
-        this.spriteWidth = 218
-        this.spriteHeight = 177
+        this.spriteWidth = 213
+        this.spriteHeight = 213
         this.flapSpeed = Math.floor(Math.random() * 4 + 2)
         this.width = this.spriteWidth*this.flapSpeed*0.1
         this.height = this.spriteHeight*this.flapSpeed*0.1
         this.x = Math.random() * (CANVAS_WIDTH - this.width)
         this.y = Math.random() * (CANVAS_HEIGHT- this.height)
+        this.newx = Math.random() * (CANVAS_WIDTH - this.width)
+        this.newy = Math.random() * (CANVAS_HEIGHT- this.height)
         this.frame = 0
-        this.angle = Math.random()*Math.PI
-        this.angleSpeed = (Math.random()*0.12-0.06)
-        this.curveAmp = Math.random() *100 +100
+        this.intervalMov = Math.floor(Math.random()*200)+50
     }
     update(gameFrame){
-        this.x = Math.cos(this.angle*(1/2))*(CANVAS_WIDTH-this.width)/2+(CANVAS_WIDTH-this.width)/2 
-        this.y = Math.sin(this.angle*(1/2.5))*(CANVAS_HEIGHT-this.height)/2+(CANVAS_HEIGHT-this.height)/2 
-        this.angle+=this.angleSpeed
-        if (this.x<-this.width) this.x = CANVAS_WIDTH
+        if (gameFrame%this.intervalMov===0){
+            this.newx = Math.random() * (CANVAS_WIDTH - this.width)
+            this.newy = Math.random() * (CANVAS_HEIGHT- this.height)
+        }
+        const dx = this.x - this.newx
+        const dy = this.y - this.newy
+        this.x -= dx/100*this.speed
+        this.y -= dy/100*this.speed
         if (gameFrame%this.flapSpeed===0){
-            this.frame > 4 ? this.frame = 0 : this.frame++
+            this.frame > 7 ? this.frame = 0 : this.frame++
         }
             
     }
@@ -42,7 +46,7 @@ class Enemy{
 }
 
 for (let i = 0; i < numberEnemies; ++i) {
-    enemies.push(new Enemy("enemy3.png"))
+    enemies.push(new Enemy("enemy4.png"))
 }
 
 function animate(){
